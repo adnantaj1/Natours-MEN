@@ -1,4 +1,3 @@
-
 exports.getAllUsers = (req, res) => {
   res.status(500).json({
     status: 'Error',
@@ -11,21 +10,21 @@ exports.createUser = (req, res) => {
     status: 'Error',
     message: 'Not Implemented',
   });
-}
+};
 
 exports.getUser = (req, res) => {
   res.status(500).json({
     status: 'Error',
     message: 'Not Implemented',
   });
-}
+};
 
 exports.updateUser = (req, res) => {
   res.status(500).json({
     status: 'Error',
     message: 'Not Implemented',
   });
-}
+};
 
 exports.deleteUser = (req, res) => {
   res.status(500).json({
