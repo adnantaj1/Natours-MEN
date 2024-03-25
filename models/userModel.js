@@ -25,6 +25,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'A user must have a password'],
     minlength: [8, 'A password must be at least 8 characters'],
+    select: false,
   },
   passwordConfirm: {
     type: String,
@@ -49,6 +50,13 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+// to match the password we use instance method that will be available on all the user documents
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword,
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;

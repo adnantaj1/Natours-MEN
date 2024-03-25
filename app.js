@@ -15,6 +15,7 @@ app.use(express.json());
 // app.use(express.static(`${__dirname}/public`));  // to access static files from the public folder
 app.use((req, res, next) => {
   req.reqTime = new Date().toISOString();
+  console.log(req.headers);
   next();
 });
 
