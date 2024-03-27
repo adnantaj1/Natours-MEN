@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
@@ -6,7 +7,6 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'A user must have a name'],
-    trim: true,
     maxlength: [20, 'A user name cannot be more than 20 characters'],
     minlength: [5, 'A user name cannot be less than 10 characters'],
   },
@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'A user must have an email'],
     unique: true,
-    trim: true,
     lowercase: true,
     validate: [validator.isEmail, 'Please enter a valid email address'],
   },
@@ -28,14 +27,13 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'A user must have a password'],
+    required: [true, 'Please provide a password'],
     minlength: [8, 'A password must be at least 8 characters'],
     select: false,
   },
   passwordConfirm: {
     type: String,
-    required: [true, 'A user must have a password'],
-    minlength: [8, 'A password must be at least 8 characters'],
+    required: [true, 'Please confirm your password'],
     validate: {
       // This only works with Create and Save!!!
       validator: function (el) {
@@ -44,15 +42,15 @@ const userSchema = new mongoose.Schema({
       message: 'Passwords do not match',
     },
   },
-  passwordChangedAt: {
-    type: Date,
-  },
+  passwordChangedAt: Date,
+  passwordResetToken: String,
+  passwordResetExpires: Date,
 });
 
 userSchema.pre('save', async function (next) {
   // only run if the password is modified
-  if (!this.isModified()) return next();
-  // hash the password and delete the passwordConfirm 
+  if (!this.isModified('password')) return next();
+  // hash the password and delete the passwordConfirm
   this.password = await bcrypt.hash(this.password, 12);
   this.passwordConfirm = undefined;
   next();
@@ -77,6 +75,18 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
 
   return false;
 };
+
+userSchema.methods.createPasswordResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+  console.log({ resetToken }, this.passwordResetToken);
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+  return resetToken;
+};
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
