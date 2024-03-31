@@ -12,16 +12,6 @@ const filterObj = (obj, ...allowedFields) => {
   });
   return newObj;
 };
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
-  res.status(200).json({
-    status: 'success',
-    result: users.length,
-    data: {
-      users,
-    },
-  });
-});
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   // Check if the user eneters password in request body
@@ -64,18 +54,8 @@ exports.createUser = (req, res) => {
   });
 };
 
-exports.getUser = (req, res) => {
-  res.status(500).json({
-    status: 'Error',
-    message: 'Not Implemented',
-  });
-};
-
-exports.updateUser = (req, res) => {
-  res.status(500).json({
-    status: 'Error',
-    message: 'Not Implemented',
-  });
-};
-
+exports.getAllUsers = factory.findAll(User);
+exports.getUser = factory.findOne(User);
+// Do not use this to Update Password
+exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);
