@@ -135,7 +135,7 @@ exports.getDistances = catchAsync(async (req, res, next) => {
     },
     {
       $project: {
-        distance: 1,
+        distance: { $round: ['$distance', 2] },
         name: 1,
       },
     },
