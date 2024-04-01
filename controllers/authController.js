@@ -99,6 +99,9 @@ exports.protect = catchAsync(async (req, res, next) => {
 
 exports.restrictTo = (...roles) =>
   (req, res, next) => {
+    if (!req.user || !req.user.role) {
+      return next(new AppError('User role not specified', 403));
+    }
     if (!roles.includes(req.user.role)) {
       return next(
         new AppError('You are not authorized to access this route', 403),
