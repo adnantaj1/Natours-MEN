@@ -53,11 +53,10 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!email || !password) {
     return next(new AppError('Please provide email and password', 400));
   }
-  //check if user exsts and password is correct
+  //check if user exists and password is correct
   const user = await User.findOne({ email }).select('+password');
-  const correct = await user.correctPassword(password, user.password);
-  if (!user || !correct) {
-    return next(new AppError('Invalid credentials', 401));
+  if (!user || !(await user.correctPassword(password, user.password))) {
+    return next(new AppError('Incorrect email or password', 401));
   }
   // if everything is ok, send token
   createSendToken(user, 200, res);
@@ -71,6 +70,8 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
   if (!token) {
     return next(
