@@ -57,7 +57,7 @@ app.use(xss());
 // Prevent HTTP Parameter Pollution
 app.use(
   hpp({
-    wwhitelist: [
+    whitelist: [
       'duration',
       'ratingsQuantity',
       'ratingsAverage',
