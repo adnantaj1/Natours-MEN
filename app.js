@@ -15,8 +15,12 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRoutes');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swaggerConfig');
 
 const app = express();
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
