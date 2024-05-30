@@ -143,6 +143,7 @@ const options = {
   },
   apis: ['./routes/*.js', './models/*.js'], // Path to the files Swagger should read
 };
+//this file is updated
 
 const swaggerSpec = swaggerJsdoc(options);
 
