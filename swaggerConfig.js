@@ -38,7 +38,9 @@ const options = {
       {
         url: 'http://localhost:3000/api/v1',
         description: 'Development server',
-        url: 'https://natours-men-2.onrender.com',
+      },
+      {
+        url: 'https://natours-men-2.onrender.com/api/v1',
         description: 'Live server',
       },
     ],
