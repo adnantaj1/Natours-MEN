@@ -37,12 +37,12 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000/api/v1',
-        description: 'Development server',
-      },
-      {
         url: 'https://natours-men-2.onrender.com/api/v1',
         description: 'Live server',
+      },
+      {
+        url: 'http://localhost:3000/api/v1',
+        description: 'Development server',
       },
     ],
     paths: {

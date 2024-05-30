@@ -20,8 +20,6 @@ const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
 
-console.log(JSON.stringify(swaggerDocument, null, 2));
-
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.set('view engine', 'pug');
