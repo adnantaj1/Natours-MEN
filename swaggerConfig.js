@@ -1,4 +1,5 @@
 const swaggerJsdoc = require('swagger-jsdoc');
+
 const { signupDoc } = require('./routes/swaggerDocs/signupDoc');
 const { loginDoc } = require('./routes/swaggerDocs/loginDoc');
 const { forgotPasswordDoc } = require('./routes/swaggerDocs/forgotPasswordDoc');
@@ -41,7 +42,7 @@ const options = {
       },
       {
         url: 'https://natours-men-2.onrender.com/api/v1',
-        description: 'Live server'
+        description: 'Live server',
       },
     ],
     paths: {
