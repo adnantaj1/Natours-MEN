@@ -11,7 +11,7 @@ const { getAllUsersDoc } = require('./routes/swaggerDocs/getAllUsersDoc');
 const { getUserByIdDoc } = require('./routes/swaggerDocs/getUserByIdDoc');
 const { deleteUserByIdDoc } = require('./routes/swaggerDocs/deleteUserByIdDoc');
 const { createUserDoc } = require('./routes/swaggerDocs/createUserDoc');
-const { updateUserByIdDoc } = require('./routes/swaggerDocs/UpdateUserByIdDoc');
+const { updateUserByIdDoc } = require('./routes/swaggerDocs/updateUserByIdDoc');
 const { getAllToursDoc } = require('./routes/swaggerDocs/getAllToursDoc');
 const { createTourDoc } = require('./routes/swaggerDocs/createTourDoc');
 const { getTourByIdDoc } = require('./routes/swaggerDocs/getTourByIdDoc');
@@ -41,7 +41,7 @@ const options = {
       },
       {
         url: 'https://natours-men-2.onrender.com/api/v1',
-        description: 'Live server',
+        description: 'Live server'
       },
     ],
     paths: {
