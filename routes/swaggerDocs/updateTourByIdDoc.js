@@ -92,4 +92,4 @@ function updateTourByIdDoc() {
   };
 }
 
-module.exports = { updateTourByIdDoc };
+export { updateTourByIdDoc };

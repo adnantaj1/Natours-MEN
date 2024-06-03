@@ -43,4 +43,4 @@ function tourStatsDoc() {
   };
 }
 
-module.exports = { tourStatsDoc };
+export { tourStatsDoc };

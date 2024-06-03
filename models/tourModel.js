@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const slugify = require('slugify');
+import mongoose from 'mongoose';
+import slugify from 'slugify';
 
 const tourSchema = new mongoose.Schema(
   {
@@ -47,10 +47,10 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       validate: {
         validator: function (value) {
-          //this only point to the currenct doc on New Dcoument
+          // this only points to the current doc on New Document
           return value < this.price;
         },
-        message: 'Discount price ({VALUE}) must be below to the regular price',
+        message: 'Discount price ({VALUE}) must be below the regular price',
       },
     },
     summary: {
@@ -64,7 +64,7 @@ const tourSchema = new mongoose.Schema(
     },
     imageCover: {
       type: String,
-      required: [true, 'A Tour must have an cover image'],
+      required: [true, 'A Tour must have a cover image'],
     },
     images: [String],
     createdAt: {
@@ -77,7 +77,7 @@ const tourSchema = new mongoose.Schema(
       default: false,
     },
     startLocation: {
-      //GeoJSON Point
+      // GeoJSON Point
       type: {
         type: String,
         default: 'Point',
@@ -110,10 +110,10 @@ const tourSchema = new mongoose.Schema(
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  },
+  }
 );
 
-// set Indexes to optimize querries
+// set Indexes to optimize queries
 tourSchema.index({ price: 1, ratingsAverage: -1 });
 tourSchema.index({ slug: 1 });
 //tourSchema.index({ startLocation: '2dsphere' });
@@ -122,14 +122,14 @@ tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 });
 
-// Virtual popoulat
+// Virtual populate
 tourSchema.virtual('reviews', {
   ref: 'Review',
   foreignField: 'tour',
   localField: '_id',
 });
 
-//Document Middleware: run before save and create not for updateMany
+// Document Middleware: run before save and create not for updateMany
 tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
@@ -151,14 +151,13 @@ tourSchema.pre('save', function (next) {
 //   next();
 // });
 
-//Query Middleware:
-//used regular express so it can target all find methods. like: find, findOne, etc.
+// Query Middleware: used regular expression so it can target all find methods. like: find, findOne, etc.
 tourSchema.pre(/^find/, function (next) {
   this.find({ secretTour: { $ne: true } });
   this.start = Date.now();
   next();
 });
-//this middlwware is uded to populate user data in tours model like guide data
+// this middleware is used to populate user data in tours model like guide data
 tourSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'guides',
@@ -172,7 +171,7 @@ tourSchema.post(/^find/, function (docs, next) {
   next();
 });
 
-//Aggregation Middleware:
+// Aggregation Middleware:
 // tourSchema.pre('aggregate', function (next) {
 //   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
 //   next();
@@ -180,4 +179,4 @@ tourSchema.post(/^find/, function (docs, next) {
 
 const Tour = mongoose.model('Tour', tourSchema);
 
-module.exports = Tour;
+export default Tour;

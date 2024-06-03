@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Tour = require('./tourModel');
+import mongoose from 'mongoose';
+import Tour from './tourModel.js';
 
 const reviewSchema = new mongoose.Schema(
   {
@@ -32,17 +32,12 @@ const reviewSchema = new mongoose.Schema(
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  },
+  }
 );
+
 reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
+
 reviewSchema.pre(/^find/, function (next) {
-  // this.populate({
-  //   path: 'tour',
-  //   select: 'name',
-  // }).populate({
-  //   path: 'user',
-  //   select: 'name',
-  // });
   this.populate({
     path: 'user',
     select: 'name',
@@ -99,4 +94,4 @@ reviewSchema.post(/^findOneAnd/, async function (result, next) {
 
 const Review = mongoose.model('Review', reviewSchema);
 
-module.exports = Review;
+export default Review;

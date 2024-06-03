@@ -99,6 +99,4 @@ function loginDoc() {
   };
 }
 
-module.exports = {
-  loginDoc,
-};
+export { loginDoc };

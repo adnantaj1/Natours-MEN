@@ -76,4 +76,4 @@ function updateReviewByIdDoc() {
   };
 }
 
-module.exports = { updateReviewByIdDoc };
+export { updateReviewByIdDoc };

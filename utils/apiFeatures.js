@@ -9,10 +9,8 @@ class APIFeatures {
     const excludedFields = ['limit', 'page', 'sort', 'fields'];
     excludedFields.forEach((field) => delete queryObj[field]);
 
-    //console.log(queryObject);
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-    //console.log(JSON.parse(queryStr));
     this.query.find(JSON.parse(queryStr));
     return this;
   }
@@ -46,4 +44,4 @@ class APIFeatures {
   }
 }
 
-module.exports = APIFeatures;
+export default APIFeatures;

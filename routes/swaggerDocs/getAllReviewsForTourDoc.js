@@ -39,10 +39,10 @@ function getAllReviewsForTourDoc() {
         },
         404: {
           description: 'No reviews found for the specified tour'
-        }
-      }
-    }
+        },
+      },
+    },
   };
 }
 
-module.exports = { getAllReviewsForTourDoc };
+export { getAllReviewsForTourDoc };

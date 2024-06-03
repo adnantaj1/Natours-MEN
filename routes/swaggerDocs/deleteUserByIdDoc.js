@@ -38,4 +38,4 @@ function deleteUserByIdDoc() {
   };
 }
 
-module.exports = { deleteUserByIdDoc };
+export { deleteUserByIdDoc };

@@ -1,4 +1,3 @@
-// docs/swaggerDocs/createReviewForTourDoc.js
 function createReviewForTourDoc() {
   return {
     post: {
@@ -62,7 +61,7 @@ function createReviewForTourDoc() {
           description: 'Invalid input, object invalid',
         },
         401: {
-          description: 'Unauthorized, requires user to be logged in'
+          description: 'Unauthorized, requires user to be logged in',
         },
         403: {
           description:
@@ -73,4 +72,4 @@ function createReviewForTourDoc() {
   };
 }
 
-module.exports = { createReviewForTourDoc };
+export { createReviewForTourDoc };

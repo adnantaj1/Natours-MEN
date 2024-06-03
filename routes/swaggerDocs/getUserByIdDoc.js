@@ -43,4 +43,4 @@ function getUserByIdDoc() {
   };
 }
 
-module.exports = { getUserByIdDoc };
+export { getUserByIdDoc };

@@ -26,4 +26,4 @@ function top5ToursDoc() {
   };
 }
 
-module.exports = { top5ToursDoc };
+export { top5ToursDoc };

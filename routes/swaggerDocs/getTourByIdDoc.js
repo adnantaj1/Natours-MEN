@@ -35,4 +35,4 @@ function getTourByIdDoc() {
   };
 }
 
-module.exports = { getTourByIdDoc };
+export { getTourByIdDoc };

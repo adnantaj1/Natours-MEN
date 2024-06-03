@@ -1,36 +1,42 @@
-const express = require('express');
-const userController = require('../controllers/userController');
-const authController = require('../controllers/authController');
+import express from 'express';
+import {
+  signup,
+  login,
+  forgotPassword,
+  resetPassword,
+  protect,
+  updatePassword,
+  restrictTo,
+} from '../controllers/authController.js';
+import {
+  getMe,
+  updateMe,
+  deleteMe,
+  getAllUsers,
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser,
+} from '../controllers/userController.js';
 
 const router = express.Router();
 
-router.post('/signup', authController.signup);
+router.post('/signup', signup);
+router.post('/login', login);
+router.post('/forgotPassword', forgotPassword);
+router.patch('/resetPassword/:token', resetPassword);
 
-router.post('/signup', authController.signup);
-router.post('/login', authController.login);
-router.post('/forgotPassword', authController.forgotPassword);
-router.patch('/resetPassword/:token', authController.resetPassword);
+router.use(protect);
 
-// from here all routes are protected after this middleware and need to login
-router.use(authController.protect);
+router.patch('/updateMyPassword', updatePassword);
+router.get('/me', getMe, getUser);
+router.patch('/updateMe', updateMe);
+router.delete('/deleteMe', deleteMe);
 
-router.patch('/updateMyPassword', authController.updatePassword);
-router.get('/me', userController.getMe, userController.getUser);
-router.patch('/updateMe', userController.updateMe);
-router.delete('/deleteMe', userController.deleteMe);
+router.use(restrictTo('admin'));
 
-// from here only admins are allowed to
-router.use(authController.restrictTo('admin'));
+router.route('/').get(getAllUsers).post(createUser);
 
-router
-  .route('/')
-  .get(userController.getAllUsers)
-  .post(userController.createUser);
+router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
-router
-  .route('/:id')
-  .get(userController.getUser)
-  .patch(userController.updateUser)
-  .delete(userController.deleteUser);
-
-module.exports = router;
+export default router;

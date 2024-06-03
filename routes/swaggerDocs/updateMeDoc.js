@@ -64,4 +64,4 @@ function updateMeDoc() {
   };
 }
 
-module.exports = { updateMeDoc };
+export { updateMeDoc };

@@ -1,31 +1,31 @@
-const swaggerJsdoc = require('swagger-jsdoc');
+import swaggerJsdoc from 'swagger-jsdoc';
 
-const { signupDoc } = require('./routes/swaggerDocs/signupDoc');
-const { loginDoc } = require('./routes/swaggerDocs/loginDoc');
-const { forgotPasswordDoc } = require('./routes/swaggerDocs/forgotPasswordDoc');
-const { resetPasswordDoc } = require('./routes/swaggerDocs/resetPasswordDoc');
-const { updatePasswordDoc } = require('./routes/swaggerDocs/updatePasswordDoc');
-const { getMeDoc } = require('./routes/swaggerDocs/getMeDoc');
-const { updateMeDoc } = require('./routes/swaggerDocs/updateMeDoc');
-const { deleteMeDoc } = require('./routes/swaggerDocs/deleteMeDoc');
-const { getAllUsersDoc } = require('./routes/swaggerDocs/getAllUsersDoc');
-const { getUserByIdDoc } = require('./routes/swaggerDocs/getUserByIdDoc');
-const { deleteUserByIdDoc } = require('./routes/swaggerDocs/deleteUserByIdDoc');
-const { createUserDoc } = require('./routes/swaggerDocs/createUserDoc');
-const { updateUserByIdDoc } = require('./routes/swaggerDocs/updateUserByIdDoc');
-const { getAllToursDoc } = require('./routes/swaggerDocs/getAllToursDoc');
-const { createTourDoc } = require('./routes/swaggerDocs/createTourDoc');
-const { getTourByIdDoc } = require('./routes/swaggerDocs/getTourByIdDoc');
-const { deleteTourByIdDoc } = require('./routes/swaggerDocs/deleteTourByIdDoc');
-const { updateTourByIdDoc } = require('./routes/swaggerDocs/updateTourByIdDoc');
-const { top5ToursDoc } = require('./routes/swaggerDocs/top5ToursDoc');
-const { tourStatsDoc } = require('./routes/swaggerDocs/tourStatsDoc');
-const { getMonthlyPlanDoc } = require('./routes/swaggerDocs/getMonthlyPlanDoc');
-const { getAllReviewsDoc } = require('./routes/swaggerDocs/getAllReviewsDoc');
-const { getAllReviewsForTourDoc } = require('./routes/swaggerDocs/getAllReviewsForTourDoc');
-const { createReviewForTourDoc } = require('./routes/swaggerDocs/createReviewForTourDoc');
-const { updateReviewByIdDoc } = require('./routes/swaggerDocs/updateReviewByIdDoc');
-const { deleteReviewByIdDoc } = require('./routes/swaggerDocs/deleteReviewByIdDoc');
+import { signupDoc } from './routes/swaggerDocs/signupDoc.js';
+import { loginDoc } from './routes/swaggerDocs/loginDoc.js';
+import { forgotPasswordDoc } from './routes/swaggerDocs/forgotPasswordDoc.js';
+import { resetPasswordDoc } from './routes/swaggerDocs/resetPasswordDoc.js';
+import { updatePasswordDoc } from './routes/swaggerDocs/updatePasswordDoc.js';
+import { getMeDoc } from './routes/swaggerDocs/getMeDoc.js';
+import { updateMeDoc } from './routes/swaggerDocs/updateMeDoc.js';
+import { deleteMeDoc } from './routes/swaggerDocs/deleteMeDoc.js';
+import { getAllUsersDoc } from './routes/swaggerDocs/getAllUsersDoc.js';
+import { getUserByIdDoc } from './routes/swaggerDocs/getUserByIdDoc.js';
+import { deleteUserByIdDoc } from './routes/swaggerDocs/deleteUserByIdDoc.js';
+import { createUserDoc } from './routes/swaggerDocs/createUserDoc.js';
+import { updateUserByIdDoc } from './routes/swaggerDocs/updateUserByIdDoc.js';
+import { getAllToursDoc } from './routes/swaggerDocs/getAllToursDoc.js';
+import { createTourDoc } from './routes/swaggerDocs/createTourDoc.js';
+import { getTourByIdDoc } from './routes/swaggerDocs/getTourByIdDoc.js';
+import { deleteTourByIdDoc } from './routes/swaggerDocs/deleteTourByIdDoc.js';
+import { updateTourByIdDoc } from './routes/swaggerDocs/updateTourByIdDoc.js';
+import { top5ToursDoc } from './routes/swaggerDocs/top5ToursDoc.js';
+import { tourStatsDoc } from './routes/swaggerDocs/tourStatsDoc.js';
+import { getMonthlyPlanDoc } from './routes/swaggerDocs/getMonthlyPlanDoc.js';
+import { getAllReviewsDoc } from './routes/swaggerDocs/getAllReviewsDoc.js';
+import { getAllReviewsForTourDoc } from './routes/swaggerDocs/getAllReviewsForTourDoc.js';
+import { createReviewForTourDoc } from './routes/swaggerDocs/createReviewForTourDoc.js';
+import { updateReviewByIdDoc } from './routes/swaggerDocs/updateReviewByIdDoc.js';
+import { deleteReviewByIdDoc } from './routes/swaggerDocs/deleteReviewByIdDoc.js';
 
 const options = {
   definition: {
@@ -68,14 +68,13 @@ const options = {
         post: createTourDoc().post,
       },
       '/tours/{id}': {
-        get: getTourByIdDoc().get, // Add the GET operation defined in getTourByIdDoc.js
-        delete: deleteTourByIdDoc().delete, // DELETE Tour by ID
-        patch: updateTourByIdDoc().patch, // PATCH Tour by ID
+        get: getTourByIdDoc().get,
+        delete: deleteTourByIdDoc().delete,
+        patch: updateTourByIdDoc().patch,
       },
       '/tours/top-5-tours': top5ToursDoc(),
       '/tours/tour-stats': tourStatsDoc(),
       '/tours/monthly-plan/{year}': getMonthlyPlanDoc(),
-      // Reviews
       '/reviews': getAllReviewsDoc(),
       '/tours/{tourId}/reviews': {
         get: getAllReviewsForTourDoc().get,
@@ -148,8 +147,7 @@ const options = {
   },
   apis: ['./routes/*.js', './models/*.js'], // Path to the files Swagger should read
 };
-//this file is updated
 
 const swaggerSpec = swaggerJsdoc(options);
 
-module.exports = swaggerSpec;
+export default swaggerSpec;

@@ -96,4 +96,4 @@ function createTourDoc() {
   };
 }
 
-module.exports = { createTourDoc };
+export { createTourDoc };

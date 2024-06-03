@@ -71,6 +71,4 @@ function updatePasswordDoc() {
   };
 }
 
-module.exports = {
-  updatePasswordDoc,
-};
+export { updatePasswordDoc };

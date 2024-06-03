@@ -40,4 +40,4 @@ function deleteReviewByIdDoc() {
   };
 }
 
-module.exports = { deleteReviewByIdDoc };
+export { deleteReviewByIdDoc };

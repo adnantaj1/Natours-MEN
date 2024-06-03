@@ -19,4 +19,4 @@ function deleteMeDoc() {
   };
 }
 
-module.exports = { deleteMeDoc };
+export { deleteMeDoc };

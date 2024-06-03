@@ -33,4 +33,4 @@ function getMeDoc() {
   };
 }
 
-module.exports = { getMeDoc };
+export { getMeDoc };

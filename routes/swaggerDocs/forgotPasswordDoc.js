@@ -95,6 +95,4 @@ function forgotPasswordDoc() {
   };
 }
 
-module.exports = {
-  forgotPasswordDoc,
-};
+export { forgotPasswordDoc };

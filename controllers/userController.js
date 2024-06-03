@@ -1,7 +1,7 @@
-const User = require('../models/userModel');
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
-const factory = require('./handleFacotory');
+import User from '../models/userModel.js';
+import catchAsync from '../utils/catchAsync.js';
+import AppError from '../utils/appError.js';
+import * as factory from './handleFactory.js';
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -13,12 +13,13 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
-exports.getMe = (req, res, next) => {
+export const getMe = (req, res, next) => {
   req.params.id = req.user.id;
   next();
 };
-exports.updateMe = catchAsync(async (req, res, next) => {
-  // Check if the user eneters password in request body
+
+export const updateMe = catchAsync(async (req, res, next) => {
+  // Check if the user enters password in request body
   if (req.body.password || req.body.passwordConfirm) {
     return next(
       new AppError(
@@ -29,7 +30,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   }
   // Filter out unwanted fields
   const filteredBody = filterObj(req.body, 'name', 'email');
-  //Update User document
+  // Update User document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true,
@@ -43,7 +44,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.deleteMe = catchAsync(async (req, res, next) => {
+export const deleteMe = catchAsync(async (req, res, next) => {
   await User.findByIdAndUpdate(req.user.id, { active: false });
   res.status(204).json({
     status: 'success',
@@ -51,15 +52,15 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createUser = (req, res) => {
+export const createUser = (req, res) => {
   res.status(500).json({
     status: 'Error',
     message: 'Not Implemented',
   });
 };
 
-exports.getAllUsers = factory.findAll(User);
-exports.getUser = factory.findOne(User);
+export const getAllUsers = factory.findAll(User);
+export const getUser = factory.findOne(User);
 // Do not use this to Update Password
-exports.updateUser = factory.updateOne(User);
-exports.deleteUser = factory.deleteOne(User);
+export const updateUser = factory.updateOne(User);
+export const deleteUser = factory.deleteOne(User);

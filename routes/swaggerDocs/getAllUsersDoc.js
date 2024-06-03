@@ -38,4 +38,4 @@ function getAllUsersDoc() {
   };
 }
 
-module.exports = { getAllUsersDoc };
+export { getAllUsersDoc };

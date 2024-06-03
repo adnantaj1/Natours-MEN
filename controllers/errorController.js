@@ -1,4 +1,5 @@
-const AppError = require('../utils/appError');
+// eslint-disable-next-line import/extensions
+import AppError from '../utils/appError.js';
 
 const handleCastErrorDB = (err) => {
   const message = `Invalid ${err.path}: ${err.value}.`;
@@ -39,17 +40,17 @@ const sendErrorProd = (err, res) => {
       status: err.status,
       message: err.message,
     });
-    //Programming or other unknown error: don't send details to client
+    // Programming or other unknown error: don't send details to client
   } else {
     //console.log('Error 💥', err);
     res.status(500).json({
       status: 'error',
-      message: 'Soomething went wrong.',
+      message: 'Something went wrong.',
     });
   }
 };
 
-module.exports = (err, req, res, next) => {
+const globalErrorHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
@@ -64,3 +65,5 @@ module.exports = (err, req, res, next) => {
     sendErrorProd(err, res);
   }
 };
+
+export default globalErrorHandler;

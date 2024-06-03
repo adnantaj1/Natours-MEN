@@ -72,4 +72,4 @@ function updateUserByIdDoc() {
   };
 }
 
-module.exports = { updateUserByIdDoc };
+export { updateUserByIdDoc };

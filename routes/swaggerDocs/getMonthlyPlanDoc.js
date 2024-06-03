@@ -51,4 +51,4 @@ function getMonthlyPlanDoc() {
   };
 }
 
-module.exports = { getMonthlyPlanDoc };
+export { getMonthlyPlanDoc };

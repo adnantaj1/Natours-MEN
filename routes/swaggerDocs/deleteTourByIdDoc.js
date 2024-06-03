@@ -40,4 +40,4 @@ function deleteTourByIdDoc() {
   };
 }
 
-module.exports = { deleteTourByIdDoc };
+export { deleteTourByIdDoc };

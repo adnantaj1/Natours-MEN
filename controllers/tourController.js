@@ -1,22 +1,22 @@
-const Tour = require('../models/tourModel');
-const catchAsync = require('../utils/catchAsync');
-const factory = require('./handleFacotory');
-const AppError = require('../utils/appError');
+import Tour from '../models/tourModel.js';
+import catchAsync from '../utils/catchAsync.js';
+import * as factory from './handleFactory.js';
+import AppError from '../utils/appError.js';
 
-exports.aliasTopTours = (req, res, next) => {
+export const aliasTopTours = (req, res, next) => {
   req.query.limit = 5;
   req.query.sort = '-ratingsAverage,price';
   req.query.fields = 'name,price,ratingsAverage,summary,difficulty';
   next();
 };
 
-exports.getAllTours = factory.findAll(Tour);
-exports.getTour = factory.findOne(Tour, 'reviews');
-exports.createTour = factory.createOne(Tour);
-exports.updateTour = factory.updateOne(Tour);
-exports.deleteTour = factory.deleteOne(Tour);
+export const getAllTours = factory.findAll(Tour);
+export const getTour = factory.findOne(Tour, 'reviews');
+export const createTour = factory.createOne(Tour);
+export const updateTour = factory.updateOne(Tour);
+export const deleteTour = factory.deleteOne(Tour);
 
-exports.getToursStats = catchAsync(async (req, res, next) => {
+export const getToursStats = catchAsync(async (req, res, next) => {
   const stats = await Tour.aggregate([
     {
       $match: { ratingsAverage: { $gte: 4.5 } },
@@ -24,7 +24,6 @@ exports.getToursStats = catchAsync(async (req, res, next) => {
     {
       $group: {
         _id: { $toUpper: '$difficulty' },
-        //_id: '$ratingsAverage',
         numTours: { $sum: 1 },
         numRatings: { $sum: '$ratingsQuantity' },
         avgRating: { $avg: '$ratingsAverage' },
@@ -36,9 +35,6 @@ exports.getToursStats = catchAsync(async (req, res, next) => {
     {
       $sort: { avgPrice: -1 },
     },
-    // {
-    //   $match: { _id: { $ne: 'EASY' } },
-    // },
   ]);
   res.status(200).json({
     status: 'success',
@@ -48,11 +44,10 @@ exports.getToursStats = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
+export const getMonthlyPlan = catchAsync(async (req, res, next) => {
   const year = req.params.year * 1;
   const plan = await Tour.aggregate([
     {
-      // here we got 27 records, ecah record when it is starting
       $unwind: '$startDates',
     },
     {
@@ -91,16 +86,13 @@ exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
   });
 });
 
-// /tours-within/:distance/center/:latlng/unit/:unit
-// /tours-within/233/center/34.111745,-118.113491/unit/mi
-exports.getToursWithin = catchAsync(async (req, res, next) => {
+export const getToursWithin = catchAsync(async (req, res, next) => {
   const { distance, latlng, unit } = req.params;
   const [lat, lng] = latlng.split(',');
   const radius = unit === 'mi' ? distance / 3963.2 : distance / 6378.1;
   if (!lat || !lng) {
-    return new AppError(
-      'Please provide a lat and lng in the format lat,lng',
-      400,
+    return next(
+      new AppError('Please provide a lat and lng in the format lat,lng', 400),
     );
   }
   const tours = await Tour.find({
@@ -115,14 +107,13 @@ exports.getToursWithin = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getDistances = catchAsync(async (req, res, next) => {
+export const getDistances = catchAsync(async (req, res, next) => {
   const { latlng, unit } = req.params;
   const [lat, lng] = latlng.split(',');
-  const mulitiplier = unit === 'mi' ? 0.000611371 : 0.001;
+  const multiplier = unit === 'mi' ? 0.000621371 : 0.001;
   if (!lat || !lng) {
-    return new AppError(
-      'Please provide a lat and lng in the format lat,lng',
-      400,
+    return next(
+      new AppError('Please provide a lat and lng in the format lat,lng', 400),
     );
   }
   const distances = await Tour.aggregate([
@@ -130,7 +121,7 @@ exports.getDistances = catchAsync(async (req, res, next) => {
       $geoNear: {
         near: { type: 'Point', coordinates: [lng * 1, lat * 1] },
         distanceField: 'distance',
-        distanceMultiplier: mulitiplier,
+        distanceMultiplier: multiplier,
       },
     },
     {

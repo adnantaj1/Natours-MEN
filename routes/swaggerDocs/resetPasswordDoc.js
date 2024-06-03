@@ -69,6 +69,4 @@ function resetPasswordDoc() {
   };
 }
 
-module.exports = {
-  resetPasswordDoc,
-};
+export { resetPasswordDoc };

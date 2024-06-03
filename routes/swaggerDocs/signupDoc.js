@@ -53,6 +53,4 @@ function signupDoc() {
   };
 }
 
-module.exports = {
-  signupDoc,
-};
+export { signupDoc };

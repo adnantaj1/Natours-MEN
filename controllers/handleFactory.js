@@ -1,8 +1,8 @@
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
-const APIFeatures = require('../utils/apiFeatures');
+import catchAsync from '../utils/catchAsync.js';
+import AppError from '../utils/appError.js';
+import APIFeatures from '../utils/apiFeatures.js';
 
-exports.deleteOne = (Model) =>
+export const deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findByIdAndDelete(req.params.id);
     if (!doc) {
@@ -14,14 +14,14 @@ exports.deleteOne = (Model) =>
     });
   });
 
-exports.updateOne = (Model) =>
+export const updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
     if (!doc) {
-      return next(new AppError('No docuement found with this id', 404));
+      return next(new AppError('No document found with this id', 404));
     }
     res.status(200).json({
       status: 'success',
@@ -31,7 +31,7 @@ exports.updateOne = (Model) =>
     });
   });
 
-exports.createOne = (Model) =>
+export const createOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.create(req.body);
     res.status(201).json({
@@ -42,10 +42,10 @@ exports.createOne = (Model) =>
     });
   });
 
-exports.findOne = (Model, popOptions) =>
+export const findOne = (Model, popOptions) =>
   catchAsync(async (req, res, next) => {
-    const query = Model.findById(req.params.id);
-    if (popOptions) query.populate(popOptions);
+    let query = Model.findById(req.params.id);
+    if (popOptions) query = query.populate(popOptions);
     const doc = await query;
     if (!doc) {
       return next(new AppError('No document found with this id', 404));
@@ -58,9 +58,9 @@ exports.findOne = (Model, popOptions) =>
     });
   });
 
-exports.findAll = (Model) =>
+export const findAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    // To Alloow nested Get reviews n Tour (hack)
+    // To allow nested GET reviews on tour (hack)
     let filter = {};
     if (req.params.tourId) filter = { tour: req.params.tourId };
     const features = new APIFeatures(Model.find(filter), req.query)

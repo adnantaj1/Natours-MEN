@@ -78,4 +78,4 @@ function createUserDoc() {
   };
 }
 
-module.exports = { createUserDoc };
+export { createUserDoc };

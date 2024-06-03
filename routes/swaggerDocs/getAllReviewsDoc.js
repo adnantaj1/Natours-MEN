@@ -34,4 +34,4 @@ function getAllReviewsDoc() {
   };
 }
 
-module.exports = { getAllReviewsDoc };
+export { getAllReviewsDoc };
